@@ -725,7 +725,7 @@ fn renderCode(
     );
 }
 
-const fmtId = std.zig.fmt.fmtId;
+const fmtId = std.zig.fmtId;
 
 fn fmtDeclId(bytes: []const u8) std.fmt.Formatter(formatDeclId) {
     return .{ .data = bytes };
@@ -737,11 +737,11 @@ fn formatDeclId(
     format_options: std.fmt.FormatOptions,
     writer: anytype,
 ) !void {
-    if (std.zig.fmt.isValidId(bytes) and !std.zig.primitives.isPrimitive(bytes)) {
+    if (std.zig.isValidId(bytes) and !std.zig.primitives.isPrimitive(bytes)) {
         return writer.writeAll(bytes);
     }
     try writer.writeAll("@\"");
-    try std.zig.fmt.stringEscape(bytes, "", format_options, writer);
+    try std.zig.stringEscape(bytes, "", format_options, writer);
     try writer.writeByte('"');
 }
 
